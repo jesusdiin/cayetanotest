@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Recetas de Bebidas{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Recetas chidas</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'listar_recetas' %}">Listar Recetas</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>
