@@ -15,8 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from recetas.views import listar_recetas
+from recetas.views.views import listar_bebidas, home
+
 urlpatterns = [
-    path('recetas/', listar_recetas, name='listar_recetas')
+    path('', home, name='home'),
+    path('bebidas/', listar_bebidas, name='listar_bebida')
     #path('recetas/<int:id>/', detalle_receta, name='detalle_receta')
 ]
