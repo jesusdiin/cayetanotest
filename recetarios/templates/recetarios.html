@@ -13,7 +13,6 @@
         </div>
 
         {% if exist_recetarios %}
-        <!-- Si existen recetarios, los listamos -->
 
 		<div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
 			<div class="list-group">
@@ -37,7 +36,6 @@
 		</div>
 
         {% else %}
-            <!-- Si no existen recetarios, mostramos el mensaje y el botón de creación -->
             <p class="alert alert-warning mt-3">No existe un recetario actualmente.</p>
             <a href="/recetarios/new" class="btn btn-primary">Crear Recetario</a>
         {% endif %}

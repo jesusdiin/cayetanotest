@@ -1,3 +1,5 @@
+#visatas basadas en clases
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
@@ -31,6 +33,7 @@ def agregar_bebida(request):
         form = BebidaForm()
     return render(request, 'recetario/agregar_bebida.html', {'form': form})
 
+
 def detalle_bebida(request, bebida_id):
     url = f"https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={bebida_id}"
     response = requests.get(url)
@@ -43,7 +46,7 @@ def detalle_bebida(request, bebida_id):
             nombre = bebida_data.get("strDrink")
             descripcion = bebida_data.get("strInstructions", "No hay descripción disponible.")
             imagen = bebida_data.get("strDrinkThumb")
-            
+
             bebida_detalles = {
                 "id": bebida_id,
                 "nombre": nombre,
@@ -51,22 +54,34 @@ def detalle_bebida(request, bebida_id):
                 "imagen": imagen,
             }
 
-            # Obtener todos los recetarios de la base de datos
             recetarios = Recetario.objects.all()
 
             if request.method == "POST":
-                Bebida.objects.create(
+                recetario_id = request.POST.get('recetario_id')
+                recetario = get_object_or_404(Recetario, id=recetario_id)
+
+                bebida, created = Bebida.objects.get_or_create(
                     nombre=nombre,
-                    descripcion=descripcion,
-                    imagen=imagen,
+                    defaults={'descripcion': descripcion, 'imagen': imagen}
                 )
-                messages.success(request, "La bebida ha sido guardada exitosamente.")
-                return redirect('lista_bebidas')
-            
+
+                print(f"Bebida creada: {created}")
+
+                association, assoc_created = RecetarioBebida.objects.get_or_create(bebida=bebida, recetario=recetario)
+
+                print(f"RecetarioBebida creada: {assoc_created}")
+
+                if assoc_created:
+                    messages.success(request, f"La bebida '{nombre}' ha sido guardada en el recetario '{recetario.nombre}' exitosamente.")
+                else:
+                    messages.info(request, f"La bebida '{nombre}' ya estaba en el recetario '{recetario.nombre}'.")
+
+                return redirect('detalle_bebida', bebida_id=bebida_id)
+
             return render(request, 'detalle_bebida.html', {'bebida': bebida_detalles, 'recetarios': recetarios})
         
         else:
-            messages.error(request, "No se encontraron detalles para esta bebida.")
+            messages.error(request, "No se encontró la bebida seleccionada en la API.")
             return redirect('lista_bebidas')
     else:
         messages.error(request, "No se pudo conectar con el API.")
