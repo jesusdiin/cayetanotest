@@ -1,0 +1,13 @@
+<!-- recetas/templates/recetarios/detalle_recetario.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ recetario.nombre }}</title>
+</head>
+<body>
+    <h1>{{ recetario.nombre }}</h1>
+    <p><strong>Descripción:</strong> {{ recetario.descripcion }}</p>
+    <a href="{% url 'recetarios' %}">Volver a la lista de recetarios</a>
+</body>
+</html>
