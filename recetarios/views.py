@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
-from .models import Bebida, Recetario
+from .models import Bebida, Recetario, RecetarioBebida
 from .forms import BebidaForm, RecetarioForm
 
 import requests
@@ -102,22 +102,27 @@ def agregar_recetario(request):
 
 
 def detalle_recetario(request, recetario_id):
-
     recetario = get_object_or_404(Recetario, id=recetario_id)
-    return render(request, 'detalle_recetario.html', {'recetario': recetario})
+    
+    bebidas = RecetarioBebida.objects.filter(recetario=recetario).select_related('bebida')
+
+    context = {
+        'recetario': recetario,
+        'bebidas': bebidas,
+    }
+    return render(request, 'detalle_recetario.html', context)
 
 
 def guardar_bebida_en_recetario(request, bebida_id):
     if request.method == "POST":
-        recetario_id = request.POST.get("recetario_id")
-        bebida = get_object_or_404(Bebida, id=bebida_id)
-        recetario = get_object_or_404(Recetario, id=recetario_id)
-        print(bebida)
-        print(recetario)
+            recetario_id = request.POST.get("recetario_id")
+            recetario = get_object_or_404(Recetario, id=recetario_id)
 
-        # Suponiendo que tienes una relación Many-to-Many entre Bebida y Recetario
-        recetario.bebidas.add(bebida)
-        recetario.save()
+            try:
+                bebida = Bebida.objects.get(id=bebida_id)
+                recetario.bebidas.add(bebida)
+                messages.success(request, f"La bebida '{bebida.nombre}' ha sido añadida a '{recetario.nombre}'.")
+            except Bebida.DoesNotExist:
+                messages.error(request, "No se encontró la bebida seleccionada.")
 
-        # Redirige de nuevo a la página de detalle de la bebida o donde prefieras
-        return redirect("detalle_bebida", bebida_id=bebida_id)
+    return redirect('detalle_bebida', bebida_id=bebida_id)

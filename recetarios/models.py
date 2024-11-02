@@ -1,10 +1,5 @@
 from django.db import models
 
-class Recetario(models.Model):
-    nombre = models.CharField(max_length=255)
-    def __str__(self):
-        return self.nombre
-
 class Ingrediente(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, null=True)
@@ -23,6 +18,8 @@ class Dimension(models.Model):
 
     def __str__(self):
         return self.tipo
+    
+
 
 class Bebida(models.Model):
     nombre = models.CharField(max_length=100)
@@ -31,11 +28,20 @@ class Bebida(models.Model):
     instrucciones = models.TextField()
     ingredientes = models.ManyToManyField(Ingrediente, related_name='bebidas')
     categorias = models.ManyToManyField(Categoria, related_name='bebidas')
-    recetarios = models.ManyToManyField(Recetario, through='RecetarioBebida')
+    #recetarios = models.ManyToManyField(Recetario, through='RecetarioBebida')
     dimension = models.ForeignKey(Dimension, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.nombre
+
+class Recetario(models.Model):
+    nombre = models.CharField(max_length=255)
+    bebidas = models.ManyToManyField(Bebida, related_name='recetarios')
+
+    def __str__(self):
+        return self.nombre
+
+
 
 class RecetarioBebida(models.Model):
     recetario = models.ForeignKey(Recetario, on_delete=models.CASCADE)
