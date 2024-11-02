@@ -26,6 +26,8 @@ class Dimension(models.Model):
 
 class Bebida(models.Model):
     nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    imagen = models.TextField()
     instrucciones = models.TextField()
     ingredientes = models.ManyToManyField(Ingrediente, related_name='bebidas')
     categorias = models.ManyToManyField(Categoria, related_name='bebidas')

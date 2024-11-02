@@ -28,4 +28,7 @@ urlpatterns = [
     path('bebidas/', explorar_bebidas, name='explorar_bebidas'),
     path('bebidas/<int:bebida_id>', detalle_bebida, name='detalle_bebida'),
 
+    path('bebida/<int:bebida_id>/guardar_en_recetario/', guardar_bebida_en_recetario, name='guardar_bebida_en_recetario'),
+
+
 ]

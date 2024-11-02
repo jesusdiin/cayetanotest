@@ -31,10 +31,7 @@ def agregar_bebida(request):
         form = BebidaForm()
     return render(request, 'recetario/agregar_bebida.html', {'form': form})
 
-
 def detalle_bebida(request, bebida_id):
-    #bebida = get_object_or_404(Bebida, id=bebida_id)
-    #return render(request, 'bebidas/bebida.html', {'bebida': bebida})
     url = f"https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={bebida_id}"
     response = requests.get(url)
 
@@ -54,6 +51,9 @@ def detalle_bebida(request, bebida_id):
                 "imagen": imagen,
             }
 
+            # Obtener todos los recetarios de la base de datos
+            recetarios = Recetario.objects.all()
+
             if request.method == "POST":
                 Bebida.objects.create(
                     nombre=nombre,
@@ -63,15 +63,14 @@ def detalle_bebida(request, bebida_id):
                 messages.success(request, "La bebida ha sido guardada exitosamente.")
                 return redirect('lista_bebidas')
             
-            return render(request, 'bebidas/bebida.html', {'bebida': bebida_detalles})
+            return render(request, 'detalle_bebida.html', {'bebida': bebida_detalles, 'recetarios': recetarios})
         
         else:
             messages.error(request, "No se encontraron detalles para esta bebida.")
             return redirect('lista_bebidas')
     else:
-        messages.error(request, "No se pudo conectar con el API .")
+        messages.error(request, "No se pudo conectar con el API.")
         return redirect('lista_bebidas')
-
 
 
 
@@ -103,5 +102,22 @@ def agregar_recetario(request):
 
 
 def detalle_recetario(request, recetario_id):
+
     recetario = get_object_or_404(Recetario, id=recetario_id)
     return render(request, 'detalle_recetario.html', {'recetario': recetario})
+
+
+def guardar_bebida_en_recetario(request, bebida_id):
+    if request.method == "POST":
+        recetario_id = request.POST.get("recetario_id")
+        bebida = get_object_or_404(Bebida, id=bebida_id)
+        recetario = get_object_or_404(Recetario, id=recetario_id)
+        print(bebida)
+        print(recetario)
+
+        # Suponiendo que tienes una relación Many-to-Many entre Bebida y Recetario
+        recetario.bebidas.add(bebida)
+        recetario.save()
+
+        # Redirige de nuevo a la página de detalle de la bebida o donde prefieras
+        return redirect("detalle_bebida", bebida_id=bebida_id)
