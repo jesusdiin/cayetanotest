@@ -22,6 +22,7 @@ urlpatterns = [
     #path('bebidas/', listar_bebidas, name='listar_bebida'),
     path('recetarios/', recetarios, name='recetarios'),
     path('recetarios/new', agregar_recetario, name='agregar_recetario'),
+    path('recetarios/<int:recetario_id>/', detalle_recetario, name='detalle_recetario'),
 
     ### corregido
     path('bebidas/', explorar_bebidas, name='explorar_bebidas'),

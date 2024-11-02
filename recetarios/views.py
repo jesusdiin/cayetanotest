@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 from .models import Bebida, Recetario
@@ -99,4 +99,9 @@ def agregar_recetario(request):
             return redirect('recetarios')
     else:
         form = RecetarioForm()
-    return render(request, 'new_recetario', {'form': form})
+    return render(request, 'new_recetario.html', {'form': form})
+
+
+def detalle_recetario(request, recetario_id):
+    recetario = get_object_or_404(Recetario, id=recetario_id)
+    return render(request, 'detalle_recetario.html', {'recetario': recetario})
