@@ -1,8 +1,57 @@
-<script setup lang="ts">
-import TheWelcome from "@/components/TheWelcome.vue";
-</script>
-
 <template>
-  <main>
-  </main>
+
+<div class="container px-4 py-5" id="custom-cards">
+	<h2 class="pb-2 border-bottom">Mi recetario</h2>
+
+	<div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+		<div class="col">
+			<div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('https://s3-eu-west-1.amazonaws.com/verema/images/valoraciones/0011/0991/coctel.jpg');">
+				<a href="/recetarios">
+					<div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+						<h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Mis recetarios</h3>
+						<ul class="d-flex list-unstyled mt-auto">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+							<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+							</svg>
+						</ul>
+					</div>
+				</a>
+			</div>
+		</div>
+		
+		<div class="col">
+			<div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('https://cdn0.recetasgratis.net/es/posts/3/0/3/mezcalini_de_jamaica_74303_2_600.jpg');">
+				<a href="recetarios/new">
+					<div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+						<h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Crear recetario</h3>
+						<ul class="d-flex list-unstyled mt-auto">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+							</svg>
+						</ul>
+					</div>
+				</a>
+			</div>
+		</div>
+
+
+		<div class="col">
+			<div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('https://thefoodtech.com/wp-content/uploads/2023/10/bebidas-1-828x548.jpg'); background-size: cover;">
+				<a href="/bebidas">
+					<div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+						<h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Explorar Bebidas</h3>
+						<ul class="d-flex list-unstyled mt-auto">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+								<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+							</svg>
+						</ul>
+					</div>
+				</a>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+  
 </template>

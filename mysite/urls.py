@@ -17,10 +17,11 @@ Including another URLconf
 from django.urls import path
 from recetarios.views import *
 
-from recetarios.views import BebidaList
 
 urlpatterns = [
     path('api/bebidas/', BebidaList.as_view(), name='bebidas-list'),
+    path('api/recetarios/', RecetarioList.as_view(), name='recetarios-list'),
+    path('api/recetarios/<int:id>/', RecetarioDetalle.as_view(), name='recetario-detalle'),
 ]
 
 
@@ -28,8 +29,6 @@ urlpatterns = [
 urlpatterns = [
     
     path('', home, name='home'),
-    #path('bebidas/', listar_bebidas, name='listar_bebida'),
-    path('recetarios/', recetarios, name='recetarios'),
     path('recetarios/new', agregar_recetario, name='agregar_recetario'),
     path('recetarios/<int:recetario_id>/', detalle_recetario, name='detalle_recetario'),
 

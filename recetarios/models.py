@@ -34,6 +34,7 @@ class Bebida(models.Model):
     def __str__(self):
         return self.nombre
 
+
 class Recetario(models.Model):
     nombre = models.CharField(max_length=255)
     bebidas = models.ManyToManyField(Bebida, related_name='recetarios')

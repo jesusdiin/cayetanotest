@@ -13,14 +13,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Bebida
-from .serializers import BebidaSerializer
+from .serializers import BebidaSerializer, RecetarioSerializer
 
 class BebidaList(APIView):
     def get(self, request):
         response = requests.get("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail")
         if response.status_code == 200:
             bebidas = response.json().get('drinks', [])
-            # Procesar las bebidas para el formato deseado
+
             bebidas_procesadas = [
                 {
                     "nombre": bebida.get("strDrink"),
@@ -33,6 +33,19 @@ class BebidaList(APIView):
 
         return Response({"error": "No se pudieron obtener las bebidas"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+class RecetarioList(APIView):
+    def get(self, request):
+        recetarios = Recetario.objects.all()
+        serializer = RecetarioSerializer(recetarios, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)     
+
+
+class RecetarioDetail(APIView):
+    def get(self, request, id):
+        recetario = get_object_or_404(Recetario, id=id)
+        serializer = RecetarioSerializer(recetario)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 def home(request):
     return render(request, 'home.html')
@@ -152,6 +165,12 @@ def detalle_recetario(request, recetario_id):
         'bebidas': bebidas,
     }
     return render(request, 'detalle_recetario.html', context)
+
+class RecetarioDetalle(APIView):
+    def get(self, request, id):
+        recetario = get_object_or_404(Recetario, id=id)
+        serializer = RecetarioSerializer(recetario)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 def guardar_bebida_en_recetario(request, bebida_id):
