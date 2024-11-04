@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% block content %}
+<template>
 
 <div class="container px-4 py-5" id="custom-cards">
 	<h2 class="pb-2 border-bottom">Mi recetario</h2>
@@ -51,7 +49,9 @@
 				</a>
 			</div>
 		</div>
+		
 	</div>
 </div>
 
-{% endblock %}
+  
+</template>
