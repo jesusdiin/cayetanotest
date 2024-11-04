@@ -1,6 +1,10 @@
 import Vue from "vue";
 import axios from "axios"
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap'; // Importa los JavaScript de Bootstrap si es necesario
+// Importa los JavaScript de Bootstrap si es necesario
+
 import App from "./App.vue";
 import router from "./router";
 

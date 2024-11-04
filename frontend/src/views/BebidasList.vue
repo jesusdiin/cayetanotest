@@ -17,7 +17,7 @@ export default {
         };
     },
     created() {
-        axios.get('/bebidas/?format=json')
+        axios.get('/bebidas/')
             .then(response => {
                 this.bebidas = response.data;
                 console.log(this.bebidas[0].bebida)
